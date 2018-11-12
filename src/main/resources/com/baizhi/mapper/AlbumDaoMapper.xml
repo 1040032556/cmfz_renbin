@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.baizhi.dao.AlbumDao">
+    <resultMap id="album" type="com.baizhi.entity.Album">
+        <result property="id" column="a_id"></result>
+        <result property="title" column="atitle"></result>
+        <result property="count" column="acount"></result>
+        <result property="create_date" column="acreate_date"></result>
+        <result property="star" column="astar"></result>
+        <result property="brief" column="abrief"></result>
+        <result property="author" column="aauthor"></result>
+        <result property="broadcast" column="abroadcast"></result>
+        <result property="imgPath" column="aimgPath"></result>
+        <collection property="children" ofType="com.baizhi.entity.Chapter">
+            <result property="id" column="ch_id"></result>
+            <result property="title" column="chtitle"></result>
+            <result property="downPath" column="chdownPath"></result>
+            <result property="size" column="chsize"></result>
+            <result property="duration" column="chduration"></result>
+            <result property="uploadTime" column="chuploadTime"></result>
+            <result property="album.id" column="chalbum_id"></result>
+        </collection>
+
+    </resultMap>
+
+    <insert id="insert" parameterType="com.baizhi.entity.Album">
+        insert into t_album(id,title,count,create_date,star,author,broadcast,brief,imgPath)
+        values(#{id},#{title},#{count},#{create_date},#{star},#{author},#{broadcast},#{brief},#{imgPath})
+    </insert>
+
+    <select id="queryOneById" resultType="com.baizhi.entity.Album">
+        select id,title,count,create_date,star,author,broadcast,brief,imgPath from
+        t_album
+        where id=#{id}
+    </select>
+
+    <select id="queryMore" resultType="com.baizhi.entity.Album" resultMap="album">
+        select a.id a_id,a.title atitle,a.count acount,a.create_date acreate_date,
+        a.star astar,a.author aauthor,a.broadcast abroadcast,a.brief abrief,a.imgPath aimgPath,
+        ch.id ch_id,ch.title chtitle,ch.downPath chdownPath,ch.size chsize,ch.duration chduration,ch.uploadTime chuploadTime,
+        ch.album_id chalbum_id
+        from
+        t_album a left join t_chapter ch
+        on a.id=ch.album_id
+    </select>
+
+</mapper>

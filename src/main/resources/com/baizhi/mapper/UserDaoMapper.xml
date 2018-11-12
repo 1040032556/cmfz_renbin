@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.baizhi.dao.UserDao">
+
+    <insert id="insert" parameterType="com.baizhi.entity.User">
+      insert into t_user(id,password,headPic,province,phone,city,nickname,salt,sex,birthday,status,guru_id)
+      values(#{id},#{password},#{headPic},#{province},#{phone},#{city},#{nickname},#{salt},#{sex},#{birthday},#{status},#{guru.id})
+    </insert>
+
+    <select id="query" resultType="com.baizhi.entity.User" >
+      select id,password,headPic,province,phone,city,nickname,salt,sex,birthday,status,guru_id
+      from t_user
+      where password=#{password} and phone=#{phone}
+    </select>
+
+    <delete id="delete">
+      delete from t_user
+      where id=#{id}
+    </delete>
+
+    <update id="update">
+      update t_user set password=#{password},headPic=#{headPic},sex=#{sex},province=#{province},
+      nickname=#{nickname},salt=#{salt},birthday=#{birthday},status=#{status},guru_id=#{guru.id}
+      where id=#{id}
+    </update>
+
+
+</mapper>

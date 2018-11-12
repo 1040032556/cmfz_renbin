@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.baizhi.dao.CourseDao">
+
+    <insert id="insert">
+      insert into t_course(id,title,marking,create_date)
+      values(#{id},#{title},#{marking},#{create_date})
+    </insert>
+
+    <select id="queryMore" resultType="com.baizhi.entity.Course">
+      select id,title,marking,create_date from t_course
+    </select>
+
+    <select id="queryOneById" resultType="com.baizhi.entity.Course">
+      select * from t_course
+      where id=#{id}
+    </select>
+
+    <delete id="delete" parameterType="java.lang.String">
+      delete from t_course
+      where id=#{id}
+    </delete>
+
+    <update id="update" parameterType="com.baizhi.entity.Course">
+      update t_course set title=#{title},marking=#{marking}
+      where id=#{id}
+    </update>
+</mapper>
